@@ -48,7 +48,7 @@
                                         <input type="password" name="repassword" class="form-control input" placeholder="Repassword" required>
                                     </div>
                                     <div class="form-check">
-                                        <input id="defaultCheck1" class="form-check-input input" type="checkbox" name="tac" required>
+                                        <input id="defaultCheck1" class="form-check-input" type="checkbox" name="tac" required>
                                         <label class="form-check-label" for="defaultCheck1">
                                             Term and Condition check box
                                         </label>
@@ -156,34 +156,34 @@
             }
 
             $(document).on('submit', '#form1', function(){
-                let input = {}
+               
                 $.each($(this).find('.input'), function(){
-                    input[$(this).attr('name')] = $(this).val()
+                    formWizard[$(this).attr('name')] = $(this).val()
                 })
-                if(input.password !== input.repassword) $('#alertForm1').show()
+                if(formWizard.password !== formWizard.repassword) $('#alertForm1').show()
                 else $('#alertForm1').hide()
                 $(this).addClass('hide')
                 $('#step2').removeClass('hide')
-                formWizard['step1'] = input
+                
                 $('#wizardTitle').html('Step 2')
                 $('#membership_fav').val(fav['Silver'])
                 return false;
             })
 
             $(document).on('submit', '#form2', function(){
-                let input = {}
+               
                 let address = []
                 $.each($(this).find('.input'), function(){
                     if ($(this).attr('name') == 'address' && $(this).val() != null && $(this).val() != '') {
                         address.push($(this).val())
                     }
-                    input[$(this).attr('name')] = $(this).val()
+                    formWizard[$(this).attr('name')] = $(this).val()
                     if ($(this).hasClass('select')){
-                        input[$(this).attr('name')] = $(this).find('option:selected').val()
+                        formWizard[$(this).attr('name')] = $(this).find('option:selected').val()
                     }
                 })
-                input.address = address
-                formWizard['step2'] = input
+                formWizard.address = address
+                
                 postData(formWizard,"{!! route('wizard.submit') !!}")
                 return false;
             })
